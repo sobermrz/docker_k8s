@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sa-logic
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sa-logic
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: sa-logic
+    spec:
+      containers:
+        - name: sa-logic
+          image: ruizhi1997/sentiment-analysis-logic:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
